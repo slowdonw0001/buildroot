@@ -36,6 +36,20 @@ __EOF__
 		gpu_mem="${arg:2}"
 		sed -e "/^${gpu_mem%=*}=/s,=.*,=${gpu_mem##*=}," -i "${BINARIES_DIR}/rpi-firmware/config.txt"
 		;;
+
+		--aarch64-uboot)
+		# Run a uboot
+		GENIMAGE_CFG="${BOARD_DIR}/genimage-${BOARD_NAME}-uboot.cfg"
+		sed -e '/^kernel=/s,=.*,=u-boot.bin,' -i "${BINARIES_DIR}/rpi-firmware/config.txt"
+		if ! grep -qE '^arm_64bit=1' "${BINARIES_DIR}/rpi-firmware/config.txt"; then
+			cat << __EOF__ >> "${BINARIES_DIR}/rpi-firmware/config.txt"
+
+# enable 64bits support
+arm_64bit=1
+__EOF__
+		fi
+		;;
+
 	esac
 
 done

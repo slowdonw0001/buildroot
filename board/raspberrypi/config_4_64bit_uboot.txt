@@ -7,6 +7,11 @@
 start_file=start4.elf
 fixup_file=fixup4.dat
 
+# for TF-A BL31
+armstub=bl31.bin
+enable_gic=1
+enable_uart=1
+
 # print the boot message on start4.elf
 uart_2ndstage=1
 

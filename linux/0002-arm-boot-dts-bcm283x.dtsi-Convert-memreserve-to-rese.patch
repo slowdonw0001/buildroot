@@ -1,0 +1,38 @@
+From 73cb0ceb30f460c1fff47641efc27e9eacdca320 Mon Sep 17 00:00:00 2001
+From: slowdown0001 <slow.down.0001.0002.0003@gmail.com>
+Date: Sun, 22 May 2022 17:49:17 +0900
+Subject: [PATCH] arm : boot : dts : bcm283x.dtsi : Convert memreserve to
+ reserved-memory
+
+---
+ arch/arm/boot/dts/bcm283x.dtsi | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dtsi
+index 62d7ee513549..ae0768b1ca9c 100644
+--- a/arch/arm/boot/dts/bcm283x.dtsi
++++ b/arch/arm/boot/dts/bcm283x.dtsi
+@@ -8,7 +8,7 @@
+ /* firmware-provided startup stubs live here, where the secondary CPUs are
+  * spinning.
+  */
+-/memreserve/ 0x00000000 0x00001000;
++/* /memreserve/ 0x00000000 0x00001000; */
+ 
+ /* This include file covers the common peripherals and configuration between
+  * bcm2835 and bcm2836 implementations, leaving the CPU configuration to
+@@ -35,6 +35,11 @@ rmem: reserved-memory {
+ 		#size-cells = <1>;
+ 		ranges;
+ 
++		firmware-memory@0x00000000 {
++			no-map;
++			reg = <0x00000000 0x00001000>;
++		};
++
+ 		cma: linux,cma {
+ 			compatible = "shared-dma-pool";
+ 			size = <0x4000000>; /* 64MB */
+-- 
+2.25.1
+

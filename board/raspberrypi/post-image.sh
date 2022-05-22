@@ -32,6 +32,10 @@ fi
 trap 'rm -rf "${ROOTPATH_TMP}"' EXIT
 ROOTPATH_TMP="$(mktemp -d)"
 
+if [ -e "${BINARIES_DIR}/bcm2711-rpi-4-b-tfa.dtb" ]; then
+	cp -f ${BINARIES_DIR}/bcm2711-rpi-4-b-tfa.dtb ${BINARIES_DIR}/bcm2711-rpi-4-b.dtb
+fi
+
 rm -rf "${GENIMAGE_TMP}"
 
 genimage \

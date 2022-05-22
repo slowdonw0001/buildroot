@@ -7,6 +7,9 @@
 start_file=start4.elf
 fixup_file=fixup4.dat
 
+# print the boot message on start4.elf
+uart_2ndstage=1
+
 # Change boot image from linux to Uboot
 # kernel=Image
 kernel=u-boot.bin

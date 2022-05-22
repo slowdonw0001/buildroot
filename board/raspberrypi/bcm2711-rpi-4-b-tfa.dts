@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+
+#include "broadcom/bcm2711-rpi-4-b.dts"
+
+&cpu0 {
+	enable-method = "psci";
+};
+
+&cpu1 {
+	enable-method = "psci";
+};
+
+&cpu2 {
+	enable-method = "psci";
+};
+
+&cpu3 {
+	enable-method = "psci";
+};
+
+&soc {
+	psci {
+		compatible      = "arm,psci-0.2";
+		method          = "smc";
+	};
+};
+
+&rmem {
+	/* /memreserve/ 0x00000000 0x00001000; */
+	firmware-memory@0x00001000 {
+		no-map;
+		reg = <0x00001000 0x0007f000>;
+	};
+};
+

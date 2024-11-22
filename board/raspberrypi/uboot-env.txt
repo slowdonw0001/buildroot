@@ -1,0 +1,27 @@
+set_eth_addr=\
+    setenv serverip 192.168.1.200 \
+        && setenv ipaddr 192.168.1.201
+
+update_sdcard=\
+        run set_eth_addr \
+        && mmc dev 0 \
+        && tftpboot 0x10000000 /srv/tftp/sdcard.img \
+        && setexpr sect_size ${filesize} + 0x1ff \
+        && setexpr sect_size ${sect_size} / 0x200 \
+        && mmc write 0x10000000 0x0 ${sect_size} \
+        && reset
+
+import_env_via_tftp=\
+    run set_eth_addr \
+        && tftpboot 0x10000000 /srv/tftp/uboot-env.bin \
+        && env import -c 0x10000000 0x1000
+
+tft_linux_boot=\
+    run set_eth_addr \
+        && mmc dev 0 \
+        && setenv fdto_addr_r 0x02700000 \
+        && tftpboot ${kernel_addr_r} /srv/tftp/Image \
+        && tftpboot ${fdt_addr_r} /srv/tftp/bcm2711-rpi-4-b-tfa.dtb \
+        && fdt addr ${fdt_addr_r} \
+        && setenv bootargs earlycon=pl011,mmio32,0xfe201000 coherent_pool=1M 8250.nr_uarts=1 console=ttyAMA1,115200 root=/dev/mmcblk0p2 rootwait \
+        && booti ${kernel_addr_r} - ${fdt_addr_r}

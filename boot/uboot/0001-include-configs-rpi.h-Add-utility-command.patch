@@ -1,0 +1,27 @@
+From cc9f330efad481b7a26f0e996961736ca1ea7304 Mon Sep 17 00:00:00 2001
+From: slowdown0001 <slow.down.0001.0002.0003@gmail.com>
+Date: Sat, 28 Dec 2024 22:06:34 +0900
+Subject: [PATCH] include : configs : rpi.h : Add utility command
+
+---
+ include/configs/rpi.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/include/configs/rpi.h b/include/configs/rpi.h
+index 4da982f7357..5b2df7bdaf4 100644
+--- a/include/configs/rpi.h
++++ b/include/configs/rpi.h
+@@ -162,7 +162,9 @@
+ 	ENV_DEVICE_SETTINGS \
+ 	ENV_DFU_SETTINGS \
+ 	ENV_MEM_LAYOUT_SETTINGS \
+-	BOOTENV
++	BOOTENV \
++	"loadenv=fatload mmc 0:1 0x10000000 uboot-env.bin ; env import -c 0x10000000 0x1000\0" \
++	"update_sdcard=run loadenv ; run update_sdcard\0" \
+ 
+ 
+ #endif
+-- 
+2.34.1
+
